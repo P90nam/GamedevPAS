@@ -41,4 +41,6 @@ public class EnemyHealth : MonoBehaviour
         // Kamu bisa menaruh logika drop coin/potion di sini nanti
         Destroy(gameObject);
     }
+
+    public int GetCurrentHealth() => currentHealth;
 }

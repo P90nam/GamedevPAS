@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        rb.freezeRotation = true; // buat player ga muter pas kena tabrakan
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -46,11 +47,11 @@ public class PlayerMovement : MonoBehaviour
         // Balik hadap karakter (kiri / kanan)
         if (arahGerak.x > 0.01f)
         {
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            spriteRenderer.flipX = false;
         }
         else if (arahGerak.x < -0.01f)
         {
-            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            spriteRenderer.flipX = true;
         }
 
         // Cadangan input langsung (Spasi atau Klik Kiri)
@@ -113,6 +114,16 @@ public class PlayerMovement : MonoBehaviour
             {
                 gm.AmbilKoin(icon);
             }
+        }
+    }
+
+    // Musuh mati saat menyentuh Player (Collision)
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
+        if (enemyHealth != null)
+        {
+            enemyHealth.TakeDamage(enemyHealth.GetCurrentHealth());
         }
     }
 }

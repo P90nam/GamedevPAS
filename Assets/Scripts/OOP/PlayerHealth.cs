@@ -81,6 +81,13 @@ public class PlayerHealth : MonoBehaviour
 
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = false;
+
+        // Sembunyikan karakter
+        if (spriteRenderer != null) spriteRenderer.enabled = false;
+
+        // Tampilkan layar Game Over
+        GameManager gm = FindAnyObjectByType<GameManager>();
+        if (gm != null) gm.GameOver();
     }
 
     public int GetCurrentHealth() => currentHealth;

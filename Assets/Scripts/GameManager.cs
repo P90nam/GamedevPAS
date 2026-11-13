@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -9,6 +10,7 @@ public class GameManager : MonoBehaviour
     [Header("UI References")]
     public TextMeshProUGUI teksSkor;
     public GameObject teksMenang;
+    public GameObject gameOverPanel; // Panel Game Over (buat di Canvas)
 
     [Header("Item Data")]
     public ItemDetails coinData; 
@@ -21,8 +23,16 @@ public class GameManager : MonoBehaviour
         {
             teksMenang.SetActive(false);
         }
+
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(false);
+        }
         
         UpdateSkorUI();
+
+        // Pastikan game berjalan normal
+        Time.timeScale = 1f;
     }
 
     public void AmbilKoin(Sprite icon = null)
@@ -61,5 +71,24 @@ public class GameManager : MonoBehaviour
         {
             teksMenang.SetActive(true);
         }
+    }
+
+    public void GameOver()
+    {
+        Debug.Log("GAME OVER!");
+
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);
+        }
+
+        // Hentikan game
+        Time.timeScale = 0f;
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
